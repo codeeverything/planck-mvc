@@ -1,6 +1,9 @@
 <?php
 
-include_once '../core/controller/Controller.php';
+namespace Planck\app\controller;
+
+use Planck\Core\Controller\Controller;
+use Planck\Core\Network\Request;
 
 class MyController extends Controller {
     public function index($what = 'wut!') {
@@ -18,6 +21,8 @@ class MyController extends Controller {
                 'more' => true,
             ),
         );
+        
+        debug($data);
         
         if (Request::$ext === 'json') {
             $this->json($data)    ;

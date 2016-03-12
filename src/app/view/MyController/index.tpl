@@ -18,8 +18,8 @@
     <![endif]-->
   </head>
   <body>
-    <h1>Hello, <?= $name; ?></h1>
-    <h2>Say <?= $what; ?></h2>
+    <h1>Hello, {{ name }}</h1>
+    <h2>Say {{ what }}</h2>
 
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>

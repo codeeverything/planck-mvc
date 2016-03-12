@@ -1,11 +1,45 @@
 {
     "_readme": [
         "This file locks the dependencies of your project to a known state",
-        "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "01a4a38e47f13521e81f25fe120df196",
-    "packages": [],
+    "hash": "d4ed06b5492225b190d57d63d03c4128",
+    "content-hash": "42ef998bc0cce346056ff0896e38ac12",
+    "packages": [
+        {
+            "name": "codeeverything/burlap",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/codeeverything/burlap.git",
+                "reference": "846de2500145b8732acf0a76d0da3316dfb1f49b"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/codeeverything/burlap/zipball/846de2500145b8732acf0a76d0da3316dfb1f49b",
+                "reference": "846de2500145b8732acf0a76d0da3316dfb1f49b",
+                "shasum": ""
+            },
+            "require-dev": {
+                "phpunit/phpunit": "~4.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Burlap\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "authors": [
+                {
+                    "name": "Mike Timms",
+                    "email": "mike@codeeverything.com"
+                }
+            ],
+            "time": "2016-03-12 10:20:01"
+        }
+    ],
     "packages-dev": [
         {
             "name": "doctrine/instantiator",
@@ -913,16 +947,16 @@
         },
         {
             "name": "symfony/yaml",
-            "version": "v3.0.2",
+            "version": "v3.0.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/yaml.git",
-                "reference": "3cf0709d7fe936e97bee9e954382e449003f1d9a"
+                "reference": "b5ba64cd67ecd6887f63868fa781ca094bd1377c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/yaml/zipball/3cf0709d7fe936e97bee9e954382e449003f1d9a",
-                "reference": "3cf0709d7fe936e97bee9e954382e449003f1d9a",
+                "url": "https://api.github.com/repos/symfony/yaml/zipball/b5ba64cd67ecd6887f63868fa781ca094bd1377c",
+                "reference": "b5ba64cd67ecd6887f63868fa781ca094bd1377c",
                 "shasum": ""
             },
             "require": {
@@ -958,12 +992,14 @@
             ],
             "description": "Symfony Yaml Component",
             "homepage": "https://symfony.com",
-            "time": "2016-02-02 13:44:19"
+            "time": "2016-02-23 15:16:06"
         }
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": [],
+    "stability-flags": {
+        "codeeverything/burlap": 20
+    },
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": [],

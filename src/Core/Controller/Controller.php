@@ -1,5 +1,7 @@
 <?php
 
+namespace Planck\Core\Controller;
+
 class Controller {
     protected $vars = array();
     
