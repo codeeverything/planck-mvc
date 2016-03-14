@@ -2,8 +2,6 @@
 
 use Planck\Core\Network\Request;
 use Planck\Core\Controller\Controller;
-use Planck\Core\View\Renderer;
-use Burlap\Burlap;
 
 error_reporting(E_ALL);
 ini_set('display_errors', true);
@@ -22,29 +20,13 @@ set_error_handler('exceptions_error_handler');
 require '../vendor/autoload.php';
 require '../src/Core/Utils/Utils.php';
 
-Request::init();
-// echo Request::data('GET.foo');
-// echo Request::data('GET.bar');
-// echo Request::data('SERVER.REQUEST_URI');
-// print_r( Request::data('HEADER.HOST') );
-// print_r( Request::path() );
+include_once '../Config/services.php';
+include_once '../Config/routes.php';
 
-$routes = array(
-    '/hello' => array(
-        'controller' => 'My',
-        'action' => 'hello',
-    ),
-    '/bye' => array(
-        'controller' => 'My',
-        'action' => 'bye',
-    ),
-);
+Request::init();
 
 $controller = parse_url(Request::path());
 $controller = current(explode('.', $controller['path']));
-
-// debug($controller);
-// die();
 
 $params = array();
 if (array_key_exists($controller, $routes)) {
@@ -67,15 +49,6 @@ if (array_key_exists($controller, $routes)) {
     } 
 }
 
-echo $action;
-
-$sack = new Burlap();
-$sack->foo([function($c) {
-    return rand();
-}]);
-
-echo $sack->foo();
-
 // store the controller name
 $controllerName = $controller;
 
@@ -86,12 +59,10 @@ try {
     
     // get an instance of the controller
     $controller = new $fullControllerName();
+    $controller->setContainer($sack);
     // call the action
     call_user_func_array(array($controller, $action), $params);
     
-    // extract any variables for use in the view
-    // extract($controller->getVars());
-
     if (isset($_serialize)) {
         echo $_serialize;
     } else {

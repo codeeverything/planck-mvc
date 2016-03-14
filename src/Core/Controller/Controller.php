@@ -5,6 +5,12 @@ namespace Planck\Core\Controller;
 class Controller {
     protected $vars = array();
     
+    protected $container;
+    
+    public function setContainer($c) {
+        $this->container = $c;
+    }
+    
     protected function json($value) {
         $this->set(array('_serialize' => json_encode($value)));
     }
