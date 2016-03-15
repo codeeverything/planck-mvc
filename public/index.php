@@ -58,24 +58,23 @@ try {
     $fullControllerName = 'Planck\\app\\controller\\' . $controllerName;
     
     // get an instance of the controller
-    $controller = new $fullControllerName();
-    $controller->setContainer($sack);
+    $class = new ReflectionClass($fullControllerName);
+    $controllerArgs = $class->getConstructor()->getParameters();
+    
+    $initArgs = [];
+    foreach ($controllerArgs as $arg) {
+        $varName = $arg->name;
+        if (isset($sack->container[$varName])) {
+            $initArgs[] = $sack->$varName();
+        }
+    }
+    
+    $controller = $class->newInstanceArgs($initArgs);
+    
     // call the action
     call_user_func_array(array($controller, $action), $params);
     
-    if (isset($_serialize)) {
-        echo $_serialize;
-    } else {
-        if (!file_exists('../src/app/view/' . $controllerName . '/' . $action . '.tpl')) {
-            throw new Exception("View not found for $controllerName::$action()");
-        } else {
-            $renderer = new Renderer();
-            ob_start();
-            include '../src/app/view/' . $controllerName . '/' . $action . '.tpl';
-            $out = $renderer->render(ob_get_clean(), $controller->getVars());
-            echo $out;
-        }
-    }
+    echo json_encode($controller->getVars());
 } catch(Exception $e) {
     echo $e->getMessage();
 }

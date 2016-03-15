@@ -3,8 +3,14 @@
 namespace Planck\app\controller;
 
 use Planck\Core\Controller\Controller;
+use Planck\Core\Network\Request;
 
 class MyController extends Controller {
+    
+    public function __construct($rand = null) {
+        $this->rand = $rand;
+    }
+    
     public function index($what = 'wut!') {
         $name = either(Request::data('GET.name'), 'World');
         
@@ -35,13 +41,9 @@ class MyController extends Controller {
     }
     
     public function hello() {
-        echo $this->container->rand();
-        echo "<br>";
-        echo $this->container->rand();
-        die();
         $name = either(Request::data('GET.name'), 'there');
         $this->set(array(
-            'name' => $name
+            'rand' => $this->rand,
         ));
     }
     

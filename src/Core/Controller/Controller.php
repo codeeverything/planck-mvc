@@ -2,10 +2,16 @@
 
 namespace Planck\Core\Controller;
 
+use Planck\Core\Network\Request;
+
 class Controller {
     protected $vars = array();
     
     protected $container;
+    
+    public function __construct(array $bar = []) {
+        echo "constructing base controller";
+    }
     
     public function setContainer($c) {
         $this->container = $c;
