@@ -72,7 +72,7 @@ try {
     $controller = $class->newInstanceArgs($initArgs);
     
     // call the action
-    call_user_func_array(array($controller, $action), $params);
+    $res = call_user_func_array(array($controller, $action), $params);
     
     echo json_encode($controller->getVars());
 } catch(Exception $e) {

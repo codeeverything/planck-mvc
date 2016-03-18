@@ -4,6 +4,7 @@ namespace Planck\app\controller;
 
 use Planck\Core\Controller\Controller;
 use Planck\Core\Network\Request;
+use Planck\Core\Network\Response;
 
 class MyController extends Controller {
     
