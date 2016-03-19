@@ -2,6 +2,7 @@
 
 use Planck\Core\Network\Request;
 use Planck\Core\Controller\Controller;
+use Planck\Core\Event\Event;
 
 error_reporting(E_ALL);
 ini_set('display_errors', true);
@@ -23,6 +24,7 @@ require '../src/Core/Utils/Utils.php';
 include_once '../Config/services.php';
 include_once '../Config/routes.php';
 
+// init the request
 Request::init();
 
 $controller = parse_url(Request::path());
@@ -59,7 +61,7 @@ try {
     
     // get an instance of the controller
     $class = new ReflectionClass($fullControllerName);
-    $controllerArgs = $class->getConstructor()->getParameters();
+    $controllerArgs = $class->getMethod('init')->getParameters();
     
     $initArgs = [];
     foreach ($controllerArgs as $arg) {
@@ -69,10 +71,18 @@ try {
         }
     }
     
-    $controller = $class->newInstanceArgs($initArgs);
+    // we don't deal with the constructor to inject, we use the init function instead
+    // we want to call the parent Controller classes constructor for generic setup of controllers
+    $controller = $class->newInstanceArgs();
+    $controller->init($initArgs);
+    
+    // emit the controller.beforeAction
+    Event::emit('controller.beforeAction');
     
     // call the action
     $res = call_user_func_array(array($controller, $action), $params);
+    
+    Event::emit('controller.afterAction');
     
     echo json_encode($controller->getVars());
 } catch(Exception $e) {

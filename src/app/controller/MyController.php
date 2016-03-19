@@ -8,7 +8,7 @@ use Planck\Core\Network\Response;
 
 class MyController extends Controller {
     
-    public function __construct($rand = null) {
+    public function init($rand = null) {
         $this->rand = $rand;
     }
     
@@ -50,5 +50,13 @@ class MyController extends Controller {
     
     public function bye() {
         //
+    }
+    
+    public function beforeAction() {
+        echo "here we go!";
+    }
+    
+    public function afterAction() {
+        echo "and we're done!";
     }
 }
