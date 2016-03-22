@@ -1,6 +1,7 @@
 <?php
 
 use Planck\Core\Network\Request;
+use Planck\Core\Network\Response;
 use Planck\Core\Controller\Controller;
 use Planck\Core\Event\Event;
 
@@ -23,9 +24,12 @@ require '../src/Core/Utils/Utils.php';
 
 include_once '../Config/services.php';
 include_once '../Config/routes.php';
+include_once '../Config/listeners.php';
 
 // init the request
 Request::init();
+// init the response
+$response = new Response();
 
 $controller = parse_url(Request::path());
 $controller = current(explode('.', $controller['path']));
@@ -77,16 +81,25 @@ try {
     $controller->init($initArgs);
     
     // emit the controller.beforeAction
-    Event::emit('controller.beforeAction');
+    Event::emit('controller.beforeAction', [$controller]);
     
     // call the action
     $res = call_user_func_array(array($controller, $action), $params);
     
-    Event::emit('controller.afterAction');
+    Event::emit('controller.afterAction', [$res]);
     
-    echo json_encode($controller->getVars());
+    // if controller response is null then set Response::body($controller->getVars())
+    if (is_null($res)) {
+        $response->body(json_encode($controller->getVars()));
+    } else {
+        // else set to response
+        $response->body(json_encode($res));
+    }
+    
+    // Response::send()
+    $response->send();
 } catch(Exception $e) {
-    echo $e->getMessage();
+    $response->status(400);
+    $response->body($e->getMessage());
+    $response->send();
 }
-
-echo "done";

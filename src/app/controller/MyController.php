@@ -5,6 +5,7 @@ namespace Planck\app\controller;
 use Planck\Core\Controller\Controller;
 use Planck\Core\Network\Request;
 use Planck\Core\Network\Response;
+use Planck\Core\Event\Event;
 
 class MyController extends Controller {
     
@@ -43,6 +44,9 @@ class MyController extends Controller {
     
     public function hello() {
         $name = either(Request::data('GET.name'), 'there');
+        
+        Event::emit('app.hello', [$this, $name]);
+        
         $this->set(array(
             'rand' => $this->rand,
         ));
@@ -53,10 +57,15 @@ class MyController extends Controller {
     }
     
     public function beforeAction() {
-        echo "here we go!";
+        parent::beforeAction();
+        $this->set([
+            'beforeAction' => true,
+        ]);
     }
     
-    public function afterAction() {
-        echo "and we're done!";
+    public function afterAction($data = array()) {
+        $this->set([
+            'afterAction' => true,
+        ]);
     }
 }

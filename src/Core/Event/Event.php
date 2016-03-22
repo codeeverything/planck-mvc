@@ -8,6 +8,10 @@ class Event {
     
     public static function emit($event, $data = []) {
         foreach (static::$__events[$event] as $listener) {
+            if (!is_array($data)) {
+                $data = [$data];
+            }
+            
             call_user_func_array([$listener['object'], $listener['handler']], $data);
         }
     }

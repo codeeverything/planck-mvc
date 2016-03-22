@@ -10,6 +10,7 @@ abstract class Controller implements EventListener {
     protected $vars = array();
     
     public function __construct() {
+        // TODO: We attach the events before the init() function is called, which now injects dependencies, so we wouldn't have access to these?
         // listen for events
         Event::attach($this);
     }
@@ -20,7 +21,7 @@ abstract class Controller implements EventListener {
         $this->set(array('_serialize' => json_encode($value)));
     }
     
-    protected function set($values) {
+    public function set($values) {
         $this->vars = array_merge($this->getVars(), $values);  
     }
     
@@ -35,7 +36,11 @@ abstract class Controller implements EventListener {
         ];
     }
     
-    public function beforeAction() {}
+    public function beforeAction() {
+        $this->set([
+            'parentController::beforeAction' => true,
+        ]);
+    }
     
-    public function afterAction() {}
+    public function afterAction($data = array()) {}
 }

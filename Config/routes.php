@@ -9,4 +9,8 @@ $routes = array(
         'controller' => 'My',
         'action' => 'bye',
     ),
+    '/rand' => [
+        'controller' => 'Rand',
+        'action' => 'rand',
+    ],
 );
