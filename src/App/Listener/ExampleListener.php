@@ -1,6 +1,6 @@
 <?php
 
-namespace Planck\app\listener;
+namespace Planck\App\Listener;
 
 use Planck\Core\Event\EventListener;
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace Planck\app\controller;
+namespace Planck\App\Controller;
 
 use Planck\Core\Controller\Controller;
 use Planck\Core\Network\Request;

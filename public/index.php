@@ -61,9 +61,7 @@ if (array_key_exists($controller, $routes)) {
 $controllerName = $controller;
 
 try {
-    // include '../src/app/controller/' . $controllerName . '.php';
-    
-    $fullControllerName = 'Planck\\app\\controller\\' . $controllerName;
+    $fullControllerName = 'Planck\\App\\Controller\\' . $controllerName;
     
     // get an instance of the controller
     $class = new ReflectionClass($fullControllerName);
