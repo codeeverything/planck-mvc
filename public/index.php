@@ -5,8 +5,20 @@ use Planck\Core\Network\Response;
 use Planck\Core\Controller\Controller;
 use Planck\Core\Event\Event;
 
-error_reporting(E_ALL);
-ini_set('display_errors', true);
+require '../vendor/autoload.php';
+
+// handy utility functions
+require '../src/Core/Utils/Utils.php';
+
+// config
+include_once '../config/services.php';
+include_once '../config/routes.php';
+include_once '../config/listeners.php';
+include_once '../config/app.php';
+
+$config = [];
+error_reporting($config['app.errorlevel']);
+ini_set('display_errors', $config['app.debug']);
 
 function exceptions_error_handler($severity, $message, $filename, $lineno) {
   if (error_reporting() == 0) {
@@ -18,15 +30,6 @@ function exceptions_error_handler($severity, $message, $filename, $lineno) {
 }
 
 set_error_handler('exceptions_error_handler');
-
-require '../vendor/autoload.php';
-
-// handy utility functions
-require '../src/Core/Utils/Utils.php';
-
-include_once '../config/services.php';
-include_once '../config/routes.php';
-include_once '../config/listeners.php';
 
 // init the request
 Request::init();
