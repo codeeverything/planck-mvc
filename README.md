@@ -11,3 +11,16 @@ NB: This is an ongoing project in its infancy, so expect much to be missing and 
 This is an open source effort, and although its only a pet project of mine contributions are welcome! So fork and PR away :)
 
 Feel free to add issues to leave suggestions and comments.
+
+## TODO
+
+An ever changing list of things to look at! :)
+
+- [ ] Remove src/App/view
+- [ ] Remove src/Core/View
+- [ ] Add Response Formatters instead
+- [ ] Make Response static?
+- [ ] Add some tests and PHPUnit config
+- [ ] Integrate Junction router
+- [ ] Decouple router and container (some defined interface, or mapping?)
+- [ ] Pull "core" into separate framework repo. Maybe attach with subtrees, or just via Composer? 
