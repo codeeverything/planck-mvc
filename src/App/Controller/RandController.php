@@ -14,7 +14,6 @@ class RandController extends Controller {
     }
     
     public function rand() {
-        $this->response->responseFormatter = new XMLFormatter();
-        return ['value' => $this->rand[0]];
+        return $this->rand[0];
     }
 }
