@@ -20,11 +20,13 @@ function exceptions_error_handler($severity, $message, $filename, $lineno) {
 set_error_handler('exceptions_error_handler');
 
 require '../vendor/autoload.php';
+
+// handy utility functions
 require '../src/Core/Utils/Utils.php';
 
-include_once '../Config/services.php';
-include_once '../Config/routes.php';
-include_once '../Config/listeners.php';
+include_once '../config/services.php';
+include_once '../config/routes.php';
+include_once '../config/listeners.php';
 
 // init the request
 Request::init();
@@ -59,7 +61,7 @@ if (array_key_exists($controller, $routes)) {
 $controllerName = $controller;
 
 try {
-    include '../src/app/controller/' . $controllerName . '.php';
+    // include '../src/app/controller/' . $controllerName . '.php';
     
     $fullControllerName = 'Planck\\app\\controller\\' . $controllerName;
     
