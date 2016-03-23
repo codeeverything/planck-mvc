@@ -2,7 +2,14 @@
 
 namespace Planck\Core\Network;
 
+/**
+ * Abstract the HTTP response to give
+ * 
+ * @author Mike Timms
+ */
 class Response {
+    
+    // TODO: Maybe this should be static like Request?
     
     private $__status = null;
     

@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * Defines the routes to be used by your application
+ */
+
+// TODO: Pass this responsibility to a Router (Junction for example), and try to keep this decoupled so any router couuld be used
 $routes = array(
     '/hello' => array(
         'controller' => 'My',

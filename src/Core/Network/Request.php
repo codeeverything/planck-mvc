@@ -2,6 +2,11 @@
 
 namespace Planck\Core\Network;
 
+/**
+ * Abstracts the request made
+ * 
+ * @author Mike Timms
+ */
 class Request {
     
     static $pathParams = null;
@@ -67,9 +72,8 @@ class Request {
     static private function __pathParams() {
         $path = static::path();
         $path = parse_url($path);
-        // print_r($path);
         $ext = explode('.', $path['path']);
-        // debug($ext);
+        
         if (count($ext) === 2) {
             $ext = $ext[1];
         } else {

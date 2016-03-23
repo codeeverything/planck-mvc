@@ -70,6 +70,7 @@ try {
     $class = new ReflectionClass($fullControllerName);
     $controllerArgs = $class->getMethod('init')->getParameters();
     
+    // TODO: This is tightly coupled to the container, try to decouple this so you could use any container
     $initArgs = [];
     foreach ($controllerArgs as $arg) {
         $varName = $arg->name;
