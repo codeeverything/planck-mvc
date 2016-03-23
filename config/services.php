@@ -5,11 +5,11 @@
 
 use Burlap\Burlap;
 
-// grab a container
-$sack = new Burlap();
+// grab a container. This variable MUST be called "container"
+$container = new Burlap();
 
 // setup service to get a random number
-$sack->rand([function ($c) {
+$container->rand([function ($c) {
     $r = rand();
     return $r;    
 }]);

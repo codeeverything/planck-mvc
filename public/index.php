@@ -74,8 +74,8 @@ try {
     $initArgs = [];
     foreach ($controllerArgs as $arg) {
         $varName = $arg->name;
-        if (isset($sack->container[$varName])) {
-            $initArgs[] = $sack->$varName();
+        if ($container->has($varName)) {
+            $initArgs[] = $container->get($varName);
         }
     }
     
