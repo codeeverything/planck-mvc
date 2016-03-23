@@ -3,6 +3,7 @@
 namespace Planck\Core\Controller;
 
 use Planck\Core\Network\Request;
+use Planck\Core\Network\Response;
 use Planck\Core\Event\Event;
 use Planck\Core\Event\IEventListener;
 
@@ -17,12 +18,16 @@ abstract class Controller implements IEventListener {
      */
     protected $vars = array();
     
+    public $response = null;
+    
     /**
      * Construct our controller and pass to the Event handler to attach any events it listens for
      * 
      * @return void
      */
-    public function __construct() {
+    public function __construct(Response $response) {
+        $this->response = $response;
+        
         // TODO: We attach the events before the init() function is called, which now injects dependencies, so we wouldn't have access to these?
         // listen for events
         Event::attach($this);

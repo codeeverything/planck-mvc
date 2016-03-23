@@ -11,12 +11,13 @@ require '../vendor/autoload.php';
 require '../src/Core/Utils/Utils.php';
 
 // config
+$config = [];
+
 include_once '../config/services.php';
 include_once '../config/routes.php';
 include_once '../config/listeners.php';
 include_once '../config/app.php';
 
-$config = [];
 error_reporting($config['app.errorlevel']);
 ini_set('display_errors', $config['app.debug']);
 
@@ -81,7 +82,7 @@ try {
     
     // we don't deal with the constructor to inject, we use the init function instead
     // we want to call the parent Controller classes constructor for generic setup of controllers
-    $controller = $class->newInstanceArgs();
+    $controller = $class->newInstanceArgs([$response]);
     $controller->init($initArgs);
     
     // emit the controller.beforeAction
@@ -94,10 +95,10 @@ try {
     
     // if controller response is null then set Response::body($controller->getVars())
     if (is_null($res)) {
-        $response->body(json_encode($controller->getVars()));
+        $response->body($controller->getVars());
     } else {
         // else set to response
-        $response->body(json_encode($res));
+        $response->body($res);
     }
     
     // Response::send()

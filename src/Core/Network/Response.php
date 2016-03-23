@@ -2,6 +2,8 @@
 
 namespace Planck\Core\Network;
 
+use Planck\Core\Network\ResponseFormatters\JsonFormatter;
+
 /**
  * Abstract the HTTP response to give
  * 
@@ -17,10 +19,13 @@ class Response {
     
     private $__headers = [];
     
-    public function __construct($body = '', $status = 200) {
-        $this->body($body);
-        $this->status($status);
-        $this->header('Content-Type', 'application/json');
+    public $responseFormatter = null;
+    
+    public function __construct($responseFormatter = null) {
+        $this->responseFormatter = is_null($responseFormatter) ? new JsonFormatter() : $responseFormatter;
+        
+        $this->body('');
+        $this->status(200);
     }
     
     public function status($status = null) {
@@ -33,7 +38,7 @@ class Response {
     
     public function body($body = null) {
         if ($body !== null) {
-            $this->__body = $body;
+            $this->__body = $this->responseFormatter->format($body);
             return;
         }
         
@@ -51,6 +56,11 @@ class Response {
     
     public function send() {
         header("HTTP/1.1 " . $this->status());
+        
+        foreach ($this->responseFormatter->getHeaders() as $header => $value) {
+            header("$header: $value");
+        }
+        
         foreach ($this->__headers as $header => $value) {
             header("$header: $value");
         }
