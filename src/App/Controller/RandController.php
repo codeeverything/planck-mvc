@@ -5,6 +5,7 @@ namespace Planck\App\Controller;
 use Planck\Core\Controller\Controller;
 use Planck\Core\Network\Request;
 use Planck\Core\Network\Response;
+use Planck\Core\Network\ResponseFormatters\XMLFormatter;
 
 class RandController extends Controller {
     
@@ -13,6 +14,7 @@ class RandController extends Controller {
     }
     
     public function rand() {
-        return $this->rand[0];
+        $this->response->responseFormatter = new XMLFormatter();
+        return ['value' => $this->rand[0]];
     }
 }

@@ -6,6 +6,7 @@ use Planck\Core\Controller\Controller;
 use Planck\Core\Network\Request;
 use Planck\Core\Network\Response;
 use Planck\Core\Event\Event;
+use Planck\Core\Network\ResponseFormatters\XMLFormatter;
 
 class MyController extends Controller {
     
@@ -50,6 +51,8 @@ class MyController extends Controller {
         $this->set(array(
             'rand' => $this->rand,
         ));
+        
+        $this->response->responseFormatter = new XMLFormatter();
     }
     
     public function bye() {
