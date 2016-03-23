@@ -4,14 +4,14 @@ namespace Planck\Core\Controller;
 
 use Planck\Core\Network\Request;
 use Planck\Core\Event\Event;
-use Planck\Core\Event\EventListener;
+use Planck\Core\Event\IEventListener;
 
 /**
  * The base controller for all application controllers
  * 
  * @author Mike Timms
  */
-abstract class Controller implements EventListener {
+abstract class Controller implements IEventListener {
     /**
      * Holds the data to be returned after the controller action has executed
      */

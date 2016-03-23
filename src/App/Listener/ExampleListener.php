@@ -2,9 +2,9 @@
 
 namespace Planck\App\Listener;
 
-use Planck\Core\Event\EventListener;
+use Planck\Core\Event\IEventListener;
 
-class ExampleListener implements EventListener {
+class ExampleListener implements IEventListener {
     public function attachedEvents() {
         return [
             'controller.beforeAction' => 'doSomething',
