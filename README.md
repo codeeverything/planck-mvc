@@ -28,3 +28,4 @@ An ever changing list of things to look at! :)
 - [ ] Pull "core" into separate framework repo. Maybe attach with subtrees, or just via Composer? 
 - [ ] Push the "dispatching" logic out of index.php and into a framework/application/kernel class
   - Maybe tie this in with the utility functions like pr() and debug() to have them add their output to the response rather than inline at the time of calling (a la CakePHP)?
+- [ ] Make Request and Response classes PSR-7 compliant and split into their own repos/packages
