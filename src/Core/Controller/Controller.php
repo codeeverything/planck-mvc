@@ -40,7 +40,7 @@ abstract class Controller implements IEventListener {
      * 
      * @return void
      */
-    public function init() {}
+    // public function init() {}
     
     /**
      * Defines the events controllers will listen for, and the function to call when those

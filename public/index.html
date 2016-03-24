@@ -20,20 +20,11 @@
             }
         </style>
     </head>
-    <body>
-        <center>
-            <h1 id="message"></h1>    
-            <button id="rand">Get Random!</button>
-        </center>
+    <body ng-app="planckApp">
+        <div class="container" ng-view></div>
 
-        <script src="https://code.jquery.com/jquery-2.2.2.min.js"></script>
-        <script>
-            $('#rand').click(function () {
-                $.get('/rand', {}, function (res) {
-                    console.log(res);
-                    $('#message').html(res);
-                });
-            }).trigger('click');
-        </script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.2/angular.js"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.2/angular-route.js"></script>
+        <script type="text/javascript" src="js/app/app.js"></script>
     </body>
 </html>

@@ -13,6 +13,7 @@ $config = [];
 include_once '../config/services.php';
 include_once '../config/routes.php';
 include_once '../config/listeners.php';
+include_once '../config/database.php';
 include_once '../config/app.php';
 
 error_reporting($config['app.errorlevel']);

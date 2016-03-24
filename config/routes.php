@@ -17,6 +17,47 @@ use Junction\Router;
 // define the router - This can be any router, but it must be set to a variable called "router"
 $router = new Router();
 
+$router->add('GET /api/todo/:id', function ($id) {
+    return [
+        'controller' => 'Todo',
+        'action' => 'view',
+        'vars' => func_get_args(),
+    ];
+});
+
+$router->add('GET /api/todo', function () {
+    return [
+        'controller' => 'Todo',
+        'action' => 'index',
+        'vars' => func_get_args(),
+    ];
+});
+
+
+$router->add('POST /api/todo', function () {
+    return [
+        'controller' => 'Todo',
+        'action' => 'add',
+        'vars' => func_get_args(),
+    ];
+});
+
+$router->add('PUT /api/todo/:id', function ($id) {
+    return [
+        'controller' => 'Todo',
+        'action' => 'edit',
+        'vars' => func_get_args(),
+    ];
+});
+
+$router->add('DELETE /api/todo/:id', function ($id) {
+    return [
+        'controller' => 'Todo',
+        'action' => 'delete',
+        'vars' => func_get_args(),
+    ];
+});
+
 $router->add('GET /rand/:num?', function ($num) {
     return [
         'controller' => 'Rand',
