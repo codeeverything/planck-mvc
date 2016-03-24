@@ -43,8 +43,8 @@ class MyController extends Controller {
         //
     }
     
-    public function hello() {
-        $name = either(Request::data('GET.name'), 'there');
+    public function hello($name) {
+        $name = either($name, 'there');
         
         Event::emit('app.hello', [$this, $name]);
         
@@ -52,7 +52,7 @@ class MyController extends Controller {
             'rand' => $this->rand,
         ));
         
-        $this->response->responseFormatter = new XMLFormatter();
+        // $this->response->responseFormatter = new XMLFormatter();
     }
     
     public function bye() {

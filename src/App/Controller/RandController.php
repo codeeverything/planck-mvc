@@ -13,7 +13,14 @@ class RandController extends Controller {
         $this->rand = $rand;
     }
     
-    public function rand() {
-        return $this->rand[0];
+    public function rand($num = 1) {
+        if (is_null($num)) $num = 1;
+        
+        $rand = [];
+        for ($i=0; $i < $num; $i++) {
+            $rand[] = $this->rand[0];
+        }
+        
+        return join(', ', $rand);
     }
 }

@@ -37,29 +37,13 @@ Request::init();
 // init the response
 $response = new Response();
 
-$controller = parse_url(Request::path());
-$controller = current(explode('.', $controller['path']));
-
-$params = array();
-if (array_key_exists($controller, $routes)) {
-    // TODO: Add support for path params
-    $controllerArray = $controller;
-    $controller = $routes[$controllerArray]['controller'] . 'Controller';
-    $action = $routes[$controllerArray]['action'];
-} else {
-    $controller = explode('/', trim($controller, '/'));
-    
-    $controller[0] = ucfirst($controller[0]);
-    
-    if (count($controller) === 1) {
-        $controller = "{$controller[0]}Controller";
-        $action = 'index';
-    } elseif (count($controller) > 1) {
-        $action = $controller[1];
-        $params = array_slice($controller, 2);
-        $controller = "{$controller[0]}Controller";
-    } 
-}
+// call the handling function configured for the router
+// TODO: Maybe wrap this sort of thing in an invoke() function? Then can check object, 
+// check method exists, handle errors more generally and gracefully?
+$routingData = call_user_func_array([$router, $config['app.router.handler']], []);
+$controller = $routingData['controller'] . 'Controller';
+$action = either($routingData['action'], 'index');
+$params = either($routingData['vars'], []);
 
 // store the controller name
 $controllerName = $controller;
