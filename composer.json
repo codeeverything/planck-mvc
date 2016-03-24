@@ -1,9 +1,9 @@
 {
-    "name": "root/workspace",
+    "name": "codeeverything/planck-framework",
     "authors": [
         {
-            "name": "inkymike",
-            "email": "mike@eyeonmogs.com"
+            "name": "Mike Timms",
+            "email": "mike@codeeverything.com"
         }
     ],
     "require": {
