@@ -8,6 +8,7 @@
     ],
     "require": {
         "codeeverything/burlap": "dev-master",
+        "codeeverything/junction": "dev-master",
         "doctrine/orm": "^2.5"
     },
     "require-dev": {
