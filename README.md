@@ -16,11 +16,13 @@ Feel free to add issues to leave suggestions and comments.
 
 An ever changing list of things to look at! :)
 
-- [ ] Remove src/App/view
-- [ ] Remove src/Core/View
-- [ ] Add Response Formatters instead
+- [x] Remove src/App/view
+- [x] Remove src/Core/View
+- [x] Add Response Formatters instead
 - [ ] Make Response static?
 - [ ] Add some tests and PHPUnit config
-- [ ] Integrate Junction router
-- [ ] Decouple router and container (some defined interface, or mapping?)
+- [x] Integrate Junction router
+- [x] Decouple router (some defined interface, or mapping?)
+  - Decoupled by providing an app config "app.router.handler" which defines a method to call on the router object that will handle the request and match routes. Would be nice to find a standard like for the container and implement that instead
+- [x] Decouple container (container interoperability interface)
 - [ ] Pull "core" into separate framework repo. Maybe attach with subtrees, or just via Composer? 
