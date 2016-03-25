@@ -11,11 +11,12 @@
 use Doctrine\ORM\Tools\Setup;
 use Doctrine\ORM\EntityManager;
 
-
+// build a database service
 $container->db([function ($c) {
     // Create a simple "default" Doctrine ORM configuration for Annotations
     $isDevMode = true;
     $dbConfig = Setup::createAnnotationMetadataConfiguration(array(__DIR__."/src", __DIR__ . '/src/App/Entity'), $isDevMode);
+    // app entities can be referenced as 'Planck:EntityName', e.g. 'Planck:Todo'
     $dbConfig->setEntityNamespaces([
       'Planck' => 'Planck\App\Entity',
     ]);

@@ -2,7 +2,6 @@
 
 namespace Planck\App\Entity;
 
-// use Doctrine\ORM\Mapping AS ORM;
 use Planck\Core\Entity\BaseEntity;
 
 /**

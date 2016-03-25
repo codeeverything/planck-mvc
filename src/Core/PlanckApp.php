@@ -37,7 +37,7 @@ class PlanckApp {
             $class = new \ReflectionClass($fullControllerName);
             $controllerArgs = $class->getMethod('init')->getParameters();
             
-            // TODO: This is tightly coupled to the container, try to decouple this so you could use any container
+            // Build a list of services to inject into the controller (if any)
             $initArgs = [];
             foreach ($controllerArgs as $arg) {
                 $varName = $arg->name;
@@ -49,7 +49,7 @@ class PlanckApp {
             // we don't deal with the constructor to inject, we use the init function instead
             // we want to call the parent Controller classes constructor for generic setup of controllers
             $controller = $class->newInstanceArgs([$response]);
-            $controller->init($initArgs);
+            call_user_func_array([$controller, 'init'], $initArgs);
             
             // emit the controller.beforeAction
             Event::emit('controller.beforeAction', [$controller]);

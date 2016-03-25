@@ -6,12 +6,26 @@ use Planck\Core\Controller\Controller;
 use Planck\Core\Network\Request;
 use Planck\App\Entity\Todo;
 
+/**
+ * Manage Todo tasks
+ * 
+ * @author Mike Timms <mike@codeeverything.com>
+ */
 class TodoController extends Controller {
+    /**
+     * Store our database access object
+     */
     protected $db;
     
-    public function init($db) {
+    /**
+     * Init the controller. Arguments should match entries in the container and will be injected
+     * 
+     * @param EntityManager $db - The Doctrine Entity Manager
+     * @return void
+     */
+    public function init(\Doctrine\ORM\EntityManager $db) {
         //
-        $this->db = $db[0];
+        $this->db = $db;
     }
     
     public function index() {

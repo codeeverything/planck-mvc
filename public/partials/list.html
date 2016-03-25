@@ -1,31 +1,32 @@
 <div class="row">
     <div class="col-md-6">
         <div class="todolist not-done">
-         <h1>Todos</h1>
-            <input type="text" class="form-control add-todo" placeholder="Add todo">
-                <button id="checkAll" class="btn btn-success">Mark all as done</button>
-                
-                <hr>
-                <ul id="sortable" class="list-unstyled" ng-repeat="item in todoList track by $index">
-                <li class="ui-state-default">
-                    <div class="checkbox" ng-click="deleteTodo(item)">
-                        <label>
-                            <input type="checkbox" value="" />{{ item.id }} : {{item.name}}</label>
-                    </div>
-                </li>
-            </ul>
-            <div class="todo-footer">
-                <strong><span class="count-todos"></span></strong> Items Left
+         <h1 style="text-transform: uppercase;">my todo list</h1>
+            <div class="row">
+                <div class="col-xs-12">
+                    <input type="text" id="todoEntry" class="form-control add-todo" placeholder="Add todo" ng-model="newItem">        
+                </div>
             </div>
-        </div>
-    </div>
-    <div class="col-md-6">
-        <div class="todolist">
-         <h1>Already Done</h1>
-            <ul id="done-items" class="list-unstyled">
-                <li>Some item <button class="remove-item btn btn-default btn-xs pull-right"><span class="glyphicon glyphicon-remove"></span></button></li>
-                
-            </ul>
+            <div class="row" style="padding-top: 5px;">
+                <div class="col-xs-12">
+                    <button class="btn btn-success" ng-click="addItem()">Add</button>
+                </div>
+            </div>
+            
+            <hr>
+            
+            <table class="table table-striped">
+                <tr ng-repeat="item in todoList track by $index">
+                    <td>{{ item.name }}</td>
+                    <td>
+                        <button class="btn btn-danger fa fa-trash" ng-click="deleteTodo(item)"></button>
+                    </td>
+                </tr>
+            </table>
+            
+            <div class="todo-footer">
+                <strong><span class="count-todos">{{ todoList.length }}</span></strong> Items Left<span ng-if="todoList.length == 0">. Why not add some more?</span>
+            </div>
         </div>
     </div>
 </div>
