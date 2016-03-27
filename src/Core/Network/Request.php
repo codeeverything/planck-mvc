@@ -87,4 +87,8 @@ class Request {
     static public function path() {
         return static::__serverParam('REQUEST_URI');
     }
+    
+    static public function raw() {
+        return file_get_contents('php://input');
+    }
 }

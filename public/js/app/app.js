@@ -27,6 +27,12 @@ angular.module('planckApp', ['ngRoute']).config(['$routeProvider', function($rou
     
     // add a new item to the list of things to do
     $scope.addItem = function () {
+        // check for blank entries
+        if ($scope.newItem == '') {
+            alert('Sorry. You can\'t enter a blank todo!');
+            return;
+        }
+        
         // build the data to send
         var item = {
             "name": $scope.newItem

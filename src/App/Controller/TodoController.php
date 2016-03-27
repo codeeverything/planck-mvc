@@ -28,29 +28,59 @@ class TodoController extends Controller {
         $this->db = $db;
     }
     
+    /**
+     * Read and return a list of all Todo items
+     * 
+     * @return array
+     */
     public function index() {
         //
-        $productRepository = $this->db->getRepository('Planck:Todo');
-        $products = $productRepository->findAll();
+        $todoRepository = $this->db->getRepository('Planck:Todo');
+        $todos = $todoRepository->findAll();
         
         $res = [];
-        foreach ($products as $product) {
-            $res[] = $product->toArray();
+        foreach ($todos as $todo) {
+            $res[] = $todo->toArray();
         }
 
         return $res;
     }
     
+    /**
+     * Read and return the details of the todo item given by $id
+     * 
+     * @param int $id - The ID of the Todo item to read
+     * @return array
+     */
     public function view($id) {
         //   
-        $productRepository = $this->db->getRepository('Planck:Todo');
-        $product = $productRepository->find($id);
-        return $product->toArray();
+        $todoRepository = $this->db->getRepository('Planck:Todo');
+        $todo = $todoRepository->find($id);
+        
+        if ($todo === null) {
+            $this->response->status(404);
+            return [
+                'error' => 'The requested item could not be found.',
+            ];
+        }
+        
+        return $todo->toArray();
     }
-    
+
+    /**
+     * Add a new Todo item based on the data sent in the request
+     * 
+     * @return array
+     */
     public function add() {
         //
-        $raw = json_decode(file_get_contents('php://input'), true);
+        $raw = json_decode(Request::raw(), true);
+        
+        if ($raw === false) {
+            $this->response->status(400);
+            $this->response->body('Request formant was not valid JSON');
+            return;
+        }
         
         $product = new Todo();
         $product->setName($raw['name']);

@@ -30,3 +30,4 @@ An ever changing list of things to look at! :)
   - Maybe tie this in with the utility functions like pr() and debug() to have them add their output to the response rather than inline at the time of calling (a la CakePHP)?
 - [ ] Make Request and Response classes PSR-7 compliant and split into their own repos/packages
   - Maybe allow these to receive an event manager and details on how to emit events with it so we can do something "afterBodySet" for example, to set debug output?
+- [ ] Add some RESTful response helpers, for example for returning errors, returning "links", specifying default response codes for actions (200 on find, 201 on create...)

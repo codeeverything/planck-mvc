@@ -6,6 +6,7 @@ use Planck\Core\Network\Request;
 use Planck\Core\Network\Response;
 use Planck\Core\Event\Event;
 use Planck\Core\Event\IEventListener;
+use Exception;
 
 /**
  * The base controller for all application controllers
@@ -62,6 +63,10 @@ abstract class Controller implements IEventListener {
      * @param array $values - An array of values. Keys = variable name, value = value
      */
     public function set($values) {
+        if (!is_array($values)) {
+            throw new Exception('Controller::set() expects argument to be an array. Keys = property name, Values = value.');
+        }
+        
         $this->vars = array_merge($this->getVars(), $values);  
     }
     
