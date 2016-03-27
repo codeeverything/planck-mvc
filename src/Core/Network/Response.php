@@ -21,6 +21,22 @@ class Response {
     
     public $responseFormatter = null;
     
+    const NOTFOUND = 404;
+    
+    const BADREQUEST = 400;
+    
+    const FORBIDDEN = 403;
+    
+    const UNAUTHORISED = 401;
+    
+    const CONFLICT = 409;
+    
+    const SUCCESS = 200;
+    
+    const CREATED = 201;
+    
+    
+    
     public function __construct($responseFormatter = null) {
         $this->responseFormatter = is_null($responseFormatter) ? new JsonFormatter() : $responseFormatter;
         

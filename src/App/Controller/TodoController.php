@@ -2,8 +2,9 @@
 
 namespace Planck\App\Controller;
 
-use Planck\Core\Controller\Controller;
+use Planck\Core\Controller\RESTController;
 use Planck\Core\Network\Request;
+use Planck\Core\Network\Response;
 use Planck\App\Entity\Todo;
 
 /**
@@ -11,7 +12,7 @@ use Planck\App\Entity\Todo;
  * 
  * @author Mike Timms <mike@codeeverything.com>
  */
-class TodoController extends Controller {
+class TodoController extends RESTController {
     /**
      * Store our database access object
      */
@@ -58,10 +59,7 @@ class TodoController extends Controller {
         $todo = $todoRepository->find($id);
         
         if ($todo === null) {
-            $this->response->status(404);
-            return [
-                'error' => 'The requested item could not be found.',
-            ];
+            return $this->sendError('message', Response::NOTFOUND);
         }
         
         return $todo->toArray();
@@ -77,9 +75,7 @@ class TodoController extends Controller {
         $raw = json_decode(Request::raw(), true);
         
         if ($raw === false) {
-            $this->response->status(400);
-            $this->response->body('Request formant was not valid JSON');
-            return;
+            return $this->sendError('Error creating object', Response::BADREQUEST);
         }
         
         $product = new Todo();
@@ -88,7 +84,7 @@ class TodoController extends Controller {
         $this->db->persist($product);
         $this->db->flush();
         
-        return $product->toArray();
+        return $this->sendCreated($product->toArray());
     }
     
     public function edit($id) {
