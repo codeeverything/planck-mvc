@@ -2,7 +2,7 @@
 
 namespace Planck\Core\Network\ResponseFormatters;
 
-class XMLFormatter {
+class XMLFormatter implements IResponseFormatter {
     
     public function format($data) {
         function xml_encode($mixed, $domElement=null, $DOMDocument=null) {
