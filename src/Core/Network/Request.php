@@ -91,4 +91,8 @@ class Request {
     static public function raw() {
         return file_get_contents('php://input');
     }
+    
+    static public function is($method) {
+        return $_SERVER['REQUEST_METHOD'] === strtoupper($method);
+    }
 }

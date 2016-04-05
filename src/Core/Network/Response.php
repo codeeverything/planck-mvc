@@ -37,6 +37,8 @@ class Response {
     
     const NOCONTENT = 204;
     
+    const NOTMODIFIED = 304;
+    
     public function __construct($responseFormatter = null) {
         $this->responseFormatter = is_null($responseFormatter) ? new JsonFormatter() : $responseFormatter;
         

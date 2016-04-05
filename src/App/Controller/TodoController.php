@@ -6,6 +6,7 @@ use Planck\Core\Controller\RESTController;
 use Planck\Core\Network\Request;
 use Planck\Core\Network\Response;
 use Planck\App\Entity\Todo;
+use Planck\Core\Exception\HttpNotFoundException;
 
 /**
  * Manage Todo tasks
@@ -63,7 +64,7 @@ class TodoController extends RESTController {
         $todo = $todoRepository->find($id);
         
         if ($todo === null) {
-            return $this->sendError('message', Response::NOTFOUND);
+            throw new HttpNotFoundException('Todo not found');
         }
         
         return $todo->toArray();
@@ -79,7 +80,7 @@ class TodoController extends RESTController {
         $raw = json_decode(Request::raw(), true);
         
         if ($raw === false) {
-            return $this->sendError('Error creating object', Response::BADREQUEST);
+            throw new HttpBadRequestException('Error creating Todo - Could not decode input.');
         }
         
         $product = new Todo();
@@ -88,7 +89,8 @@ class TodoController extends RESTController {
         $this->db->persist($product);
         $this->db->flush();
         
-        return $this->sendCreated($product->toArray());
+        // $this->created();
+        return $product->toArray();
     }
     
     public function edit($id) {
@@ -106,6 +108,7 @@ class TodoController extends RESTController {
         $this->db->persist($product);
         $this->db->flush();
         
+        // $this->created();
         return $product->toArray();
     }
     
@@ -113,5 +116,6 @@ class TodoController extends RESTController {
         $product = $this->db->getReference('Planck:Todo', $id);
         $this->db->remove($product);
         $this->db->flush();
+        // $this->blank();
     }
 }

@@ -37,7 +37,7 @@ call_user_func(function () {
   
   PlanckApp::run($router, $container, $config);
   
-  Timer::times();
+  // Timer::times();
   
-  echo (memory_get_peak_usage(true) / 1024 / 1024) . 'MB';
+  // echo (memory_get_peak_usage(true) / 1024 / 1024) . 'MB';
 });
