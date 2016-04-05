@@ -63,6 +63,42 @@ Controllers in Planck are the entry and exit points for your business logic. Sin
 
 Planck's default behaviour is to return responses as JSON, but this can be changed by using one of the other built in ```ResponseFormatters```, or rolling your own.
 
+##### Keeping it RESTful
+
+Planck includes a ```RESTController``` which you can extend to get access to some useful convenience methods - for example:
+
+- ```$this->ok()``` - send a 200 response
+- ```$this->created()``` - send a 201 response
+- ```$this->created(false)``` - send a 202 response (accepted, will be created later)
+- ```$this->blank()``` - send a 204 response (no message body)
+- ```$this->unchanged()``` - send a 304 response (removes message body)
+
+The RESTController also includes a handy ```afterAction``` callback which will sniff your request method and try to set approriate codes and body content for you. For example:
+
+- GET - 200 OK
+- POST - 201 CREATED
+- PUT - 201 CREATED
+- DELETE - 204 NO CONTENT
+
+If these don't suit your needs you can currently override the behavior by having a ```afterAction``` function in your controller. In future I aim to make the process more flexible.
+
+### Throw RESTful errors
+
+If there's an error condition in your app (the record with $id doesn't exist for example), throw an exception to capture this and return an appropriate HTTP coded message, all wrapped up in a nice neat package.
+
+Planck includes exceptions for the most common RESTful error responses, covering:
+
+-  Error (400)
+-  Not found (404)
+-  Not authorized (401)
+-  Forbidden (403)
+-  Conflict (409)
+-  Server error (500)
+
+Errors are returned in a neat package, handled by defining a service with the name ```errorResponseBuilder```, which returns a function accepting a single argument - the exception that has been thrown.
+
+The default package is an array with items for "error" and "code", showing the exception message and HTTP status code respectively. You can change this to be whatever you want simply be redefining the service.
+
 ### Services and Dependency Injection
 
 Planck is agnostic about the container you use, though it does expect it to implement the Container Interoperability interface.
