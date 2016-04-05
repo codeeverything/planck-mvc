@@ -27,6 +27,9 @@ class PlanckApp {
             $exception->setErrorResponseBuilder($container->get('errorResponseBuilder'));
             $response->body($exception->buildResponse());
             $response->status($exception->getCode());
+            
+            header('WWW-Authenticate: token');
+            
             $response->send();
             
             Timer::times();

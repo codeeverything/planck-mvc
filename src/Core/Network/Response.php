@@ -35,6 +35,8 @@ class Response {
     
     const CREATED = 201;
     
+    const ACCEPTED = 202;
+    
     const NOCONTENT = 204;
     
     const NOTMODIFIED = 304;
