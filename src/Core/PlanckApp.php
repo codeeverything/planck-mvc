@@ -6,18 +6,32 @@ use Planck\Core\Network\Request;
 use Planck\Core\Network\Response;
 use Planck\Core\Controller\Controller;
 use Planck\Core\Event\Event;
+use Planck\Core\Lib\Timer;
 
 /**
  * The starting point of the Planck app
  */
 class PlanckApp {
     
+    // TODO: Pull the router out of the container?
     public static function run($router, $container, $config) {
+        Timer::start('planck:init');
+        
         // init the request
         Request::init();
         
         // init the response
         $response = new Response();
+        
+        set_exception_handler(function ($exception) use ($response) {
+            $response->body($exception->buildResponse());
+            $response->status($exception->getCode());
+            $response->send();
+            
+            Timer::times();
+  
+            echo (memory_get_peak_usage(true) / 1024 / 1024) . 'MB';
+        });
         
         // call the handling function configured for the router
         // TODO: Maybe wrap this sort of thing in an invoke() function? Then can check object, 
@@ -35,21 +49,32 @@ class PlanckApp {
             
             // get an instance of the controller
             $class = new \ReflectionClass($fullControllerName);
-            $controllerArgs = $class->getMethod('init')->getParameters();
             
-            // Build a list of services to inject into the controller (if any)
+            // declare some initilisation args (empty)
             $initArgs = [];
-            foreach ($controllerArgs as $arg) {
-                $varName = $arg->name;
-                if ($container->has($varName)) {
-                    $initArgs[] = $container->get($varName);
+            
+            // check if we need to build on that list
+            if ($class->hasMethod('init')) {
+                $controllerArgs = $class->getMethod('init')->getParameters();
+                
+                // Build a list of services to inject into the controller (if any)
+                foreach ($controllerArgs as $arg) {
+                    $varName = $arg->name;
+                    if ($container->has($varName)) {
+                        $initArgs[] = $container->get($varName);
+                    }
                 }
             }
             
             // we don't deal with the constructor to inject, we use the init function instead
             // we want to call the parent Controller classes constructor for generic setup of controllers
             $controller = $class->newInstanceArgs([$response]);
-            call_user_func_array([$controller, 'init'], $initArgs);
+            if (count($initArgs) > 0) {
+                call_user_func_array([$controller, 'init'], $initArgs);
+            }
+            
+            Timer::end('planck:init');
+            Timer::start('planck:controller');
             
             // emit the controller.beforeAction
             Event::emit('controller.beforeAction', [$controller]);
@@ -58,6 +83,10 @@ class PlanckApp {
             $res = call_user_func_array(array($controller, $action), $params);
             
             Event::emit('controller.afterAction', [$res]);
+            
+            Timer::end('planck:controller');
+            
+            Timer::start('planck:response');
             
             // if controller response is null then set Response::body($controller->getVars())
             if (is_null($res)) {
@@ -69,6 +98,8 @@ class PlanckApp {
             
             // Response::send()
             $response->send();
+            
+            Timer::end('planck:response');
         } catch(Exception $e) {
             $response->status(400);
             $response->body($e->getMessage());

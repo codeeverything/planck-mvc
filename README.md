@@ -12,6 +12,113 @@ This is an open source effort, and although its only a pet project of mine contr
 
 Feel free to add issues to leave suggestions and comments.
 
+## Writing a simple app
+
+Planck is designed to be minimal and to help you quickly get working with RESTful responses. 
+
+The routing of RESTful requests is still the responsibility of your router and routes, but with the default Junction router that's easy to acheieve.
+
+### App structure
+
+All your application code will live in the ```/src/App``` folder, with the exception of any routes, services or listeners you define.
+
+Planck expects only two things in order to get you up and running:
+
+- A route which returns an array containing entries for the controller to instantiate, the action to call om that controller and any variables to pass from the route.
+- A controller matching the name given in the route, with the suffix "Controller" and an action on that controller matching the action given in the route.
+
+For example:
+
+```php
+// config/routes.php
+$router->add('GET /hello', function () {
+    return [
+        'controller' => 'Hello',
+        'action' => 'hello',
+        'vars' => func_get_args(),
+    ];
+});
+```
+
+```php
+// src/App/Controller/HelloController.php
+namespace Planck\App\Controller;
+
+class HelloController {
+    
+    public function hello() {
+        return 'hello, world';
+    }
+    
+}
+```
+
+Controllers in Planck are the entry and exit points for your business logic. Since we're concerned with RESTful applications we expect a controller to return some data, which can be done in two ways:
+
+- By calling ```$this->set('property_name', 'property_value');``` inline within a controller, to set return values in a peacemeal fashion
+- By returning a value, or set of values from the controller ```return ['property' => 'value', 'result' => 1234];```
+  - Note: This return can be any serializable data type
+
+### Responses
+
+Planck's default behaviour is to return responses as JSON, but this can be changed by using one of the other built in ```ResponseFormatters```, or rolling your own.
+
+### Services and Dependency Injection
+
+Planck is agnostic about the container you use, though it does expect it to implement the Container Interoperability interface.
+
+By default Planck uses the lightweight Burlap container.
+
+A controllers dependencies are drawn from the container, and can be injected by simply referencing container services as the arguments for the controller's ```init()``` function, e.g.:
+
+```php
+// controller code
+
+// inject the service labelled as "db" into this function
+public function init($db) {
+    $this->db = $db;
+}
+
+// more controller code
+```
+
+### Listeners
+
+Planck implements a simple event system, which you can extend with your own app specific events.
+
+Event listeners are defined in the ```config/listeners.php``` file, and by convention Planck expects these to live in the ```src/App/Listener``` folder, but this is up to you.
+
+An example listener ```src/App/Listener/ExampleListener.php```:
+
+```php
+<?php
+
+namespace Planck\App\Listener;
+
+use Planck\Core\Event\IEventListener;
+
+class ExampleListener implements IEventListener {
+    public function attachedEvents() {
+        return [
+            'controller.beforeAction' => 'doSomething', // core Planck event, triggered before the controller function resolved from the route is called
+            'app.hello' => 'hello', // app specific event
+        ];
+    }
+    
+    public function doSomething($controller) {
+        $controller->set([
+            'externalListener' => true,
+        ]);
+    }
+    
+    public function hello($controller, $name) {
+         $controller->set([
+             "hello.message" => "Why hello $name! How you doin'? :)"
+         ]);
+    }
+}
+```
+
 ## TODO
 
 An ever changing list of things to look at! :)

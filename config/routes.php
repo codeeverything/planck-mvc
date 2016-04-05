@@ -17,6 +17,14 @@ use Junction\Router;
 // define the router - This can be any router, but it must be set to a variable called "router"
 $router = new Router();
 
+$router->add('GET /test', function () {
+    return [
+        'controller' => 'Test',
+        'action' => 'test',
+        'vars' => func_get_args(),
+    ];
+});
+
 $router->add('GET /api/todo/:id', function ($id) {
     return [
         'controller' => 'Todo',

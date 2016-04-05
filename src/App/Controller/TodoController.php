@@ -18,6 +18,10 @@ class TodoController extends RESTController {
      */
     protected $db;
     
+    public function test() {
+        return 'hello, world';
+    }
+    
     /**
      * Init the controller. Arguments should match entries in the container and will be injected
      * 
