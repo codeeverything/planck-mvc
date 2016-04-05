@@ -14,6 +14,7 @@ $container->rand([function ($c) {
     return $r;    
 }]);
 
+// TODO: move to config/errors.php
 $container->errorResponseBuilder([function ($c) {
     return function ($ex) {
         return [
