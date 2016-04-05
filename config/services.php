@@ -13,3 +13,11 @@ $container->rand([function ($c) {
     $r = rand();
     return $r;    
 }]);
+
+$container->errorResponseBuilder([function ($c) {
+    return function ($ex) {
+        return [
+            'badness' => $ex->getMessage(),
+        ];
+    };
+}]);

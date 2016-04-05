@@ -23,7 +23,8 @@ class PlanckApp {
         // init the response
         $response = new Response();
         
-        set_exception_handler(function ($exception) use ($response) {
+        set_exception_handler(function ($exception) use ($response, $container) {
+            $exception->setErrorResponseBuilder($container->get('errorResponseBuilder'));
             $response->body($exception->buildResponse());
             $response->status($exception->getCode());
             $response->send();
