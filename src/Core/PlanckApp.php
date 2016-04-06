@@ -49,7 +49,7 @@ class PlanckApp {
             }
             
             if (error_reporting() & $severity) {
-                throw new BaseException($message, 0, $severity, $filename, $lineno);
+                throw new BaseException($message, 500);
             }
         });
         

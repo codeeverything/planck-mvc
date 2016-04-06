@@ -48,14 +48,29 @@ class Response {
         $this->status(200);
     }
     
+    /**
+     * Get or Set the HTTP status code of the response
+     * 
+     * @param int $status - The HTTP status code to apply
+     * @return int
+     */
     public function status($status = null) {
         if ($status !== null) {
+            if (!is_int($status)) {
+                trigger_error('HTTP status code must be an integer');
+            }
+            
             $this->__status = $status;
         }
         
         return $this->__status;
     }
     
+    /**
+     * Get or set the response body
+     * 
+     * @return string
+     */
     public function body($body = null) {
         if ($body !== null) {
             $this->__body = $this->responseFormatter->format($body);
@@ -65,6 +80,11 @@ class Response {
         return $this->__body;
     }
     
+    /**
+     * Get or set the HTTP response header given by $header
+     * 
+     * @return string
+     */
     public function header($header = null, $value = null) {
         if ($header !== null) {
             $this->__headers[$header] = $value;
@@ -74,6 +94,11 @@ class Response {
         return $this->headers[$header];
     }
     
+    /**
+     * Send the HTTP response
+     * 
+     * @return void
+     */
     public function send() {
         header("HTTP/1.1 " . $this->status());
         

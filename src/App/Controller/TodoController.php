@@ -89,16 +89,25 @@ class TodoController extends RESTController {
         $this->db->persist($product);
         $this->db->flush();
         
-        // $this->created();
         return $product->toArray();
     }
     
+    /**
+     * Edit some propert(ies) of the Todo given by $id
+     * 
+     * @param int $id - The ID of the Todo to edit
+     * @return array
+     */
     public function edit($id) {
         //
-        $raw = json_decode(file_get_contents('php://input'), true);
+        $raw = json_decode(Request::raw(), true);
         
         $productRepository = $this->db->getRepository('Planck:Todo');
         $product = $productRepository->find($id);
+        
+        if ($todo === null) {
+            throw new HttpNotFoundException('Todo not found');
+        }
         
         foreach ($raw as $key => $value) {
             $func = 'set' . ucfirst($key);
@@ -108,14 +117,17 @@ class TodoController extends RESTController {
         $this->db->persist($product);
         $this->db->flush();
         
-        // $this->created();
         return $product->toArray();
     }
     
+    /**
+     * Delete the Todo given by $id
+     * 
+     * @return void
+     */
     public function delete($id) {
         $product = $this->db->getReference('Planck:Todo', $id);
         $this->db->remove($product);
         $this->db->flush();
-        // $this->blank();
     }
 }

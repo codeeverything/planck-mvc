@@ -18,6 +18,7 @@ $container->rand([function ($c) {
 // TODO: move to config/errors.php
 $container->errorResponseBuilder([function ($c) {
     return function ($ex, $response) {
+        
         $code = $ex->getCode();
         $response->status($code);
             
