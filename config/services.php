@@ -4,6 +4,7 @@
  */
 
 use Burlap\Burlap;
+use Planck\Core\Network\Response;
 
 // grab a container. This variable MUST be called "container"
 $container = new Burlap();
@@ -16,9 +17,19 @@ $container->rand([function ($c) {
 
 // TODO: move to config/errors.php
 $container->errorResponseBuilder([function ($c) {
-    return function ($ex) {
+    return function ($ex, $response) {
+        $code = $ex->getCode();
+        $response->status($code);
+            
+        if ($code === Response::UNAUTHORISED) {
+            header('WWW-Authenticate: basic');
+        }
+            
         return [
-            'badness' => $ex->getMessage(),
+            'error' => [
+                'message' => $ex->getMessage(),
+                'code' => $ex->getCode(),
+            ],
         ];
     };
 }]);

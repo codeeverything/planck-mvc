@@ -38,11 +38,15 @@ class BaseException extends \Exception {
      * Build an error response.
      * Either uses the service "errorResponseBuilder" from the container, or a default structure
      * 
+     * Must return something if you want to set the response body
+     * 
      * @return mixed
      */
-    public function buildResponse() {
+    public function buildResponse($response) {
         // if null, use a default structure
         if (is_null($this->errorResponseBuilder)) {
+            $response->status($this->getCode());
+            
             return [
               'error' => $this->getMessage(),
               'code' => $this->getCode(),
@@ -50,6 +54,6 @@ class BaseException extends \Exception {
         } 
         
         // use whatever has been defined in the service
-        return call_user_func($this->errorResponseBuilder, $this);
+        return call_user_func($this->errorResponseBuilder, $this, $response);
     }
 }

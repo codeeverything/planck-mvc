@@ -24,16 +24,19 @@ class PlanckApp {
         $response = new Response();
         
         set_exception_handler(function ($exception) use ($response, $container) {
+            // get the error response builder
             $exception->setErrorResponseBuilder($container->get('errorResponseBuilder'));
-            $response->body($exception->buildResponse());
-            $response->status($exception->getCode());
             
-            header('WWW-Authenticate: token');
+            // set the response body
+            // the status, headers and other response properties might be modified in the errorResponseBuilder
+            // but the body is set here only
+            $response->body($exception->buildResponse($response));
             
+            // send it on
             $response->send();
             
+            // gather performance metrics
             Timer::times();
-  
             echo (memory_get_peak_usage(true) / 1024 / 1024) . 'MB';
         });
         

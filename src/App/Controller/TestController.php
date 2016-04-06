@@ -20,7 +20,7 @@ class TestController extends RESTController {
     // }
     
     public function test() {
-        throw new HttpUnauthorizedException('Could not find that resource');
+        throw new HttpNotFoundException('Could not find that resource');
         $this->ok();
         return 'hello, world';
     }
