@@ -24,17 +24,6 @@ call_user_func(function () {
   error_reporting($config['app.errorlevel']);
   ini_set('display_errors', $config['app.debug']);
   
-  function exceptions_error_handler($severity, $message, $filename, $lineno) {
-    if (error_reporting() == 0) {
-      return;
-    }
-    if (error_reporting() & $severity) {
-      throw new ErrorException($message, 0, $severity, $filename, $lineno);
-    }
-  }
-  
-  set_error_handler('exceptions_error_handler');
-  
   PlanckApp::run($router, $container, $config);
   
   // Timer::times();

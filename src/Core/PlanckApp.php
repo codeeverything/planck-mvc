@@ -7,6 +7,7 @@ use Planck\Core\Network\Response;
 use Planck\Core\Controller\Controller;
 use Planck\Core\Event\Event;
 use Planck\Core\Lib\Timer;
+use Planck\Core\Exception\BadException;
 
 /**
  * The starting point of the Planck app
@@ -23,6 +24,7 @@ class PlanckApp {
         // init the response
         $response = new Response();
         
+        // set exception handler
         set_exception_handler(function ($exception) use ($response, $container) {
             // get the error response builder
             $exception->setErrorResponseBuilder($container->get('errorResponseBuilder'));
@@ -38,6 +40,17 @@ class PlanckApp {
             // gather performance metrics
             Timer::times();
             echo (memory_get_peak_usage(true) / 1024 / 1024) . 'MB';
+        });
+        
+        // set error handler
+        set_error_handler(function ($severity, $message, $filename, $lineno) {
+            if (error_reporting() == 0) {
+                return;
+            }
+            
+            if (error_reporting() & $severity) {
+                throw new BadException($message, 0, $severity, $filename, $lineno);
+            }
         });
         
         // call the handling function configured for the router
