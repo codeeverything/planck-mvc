@@ -33,7 +33,7 @@ class RESTController extends Controller {
         }
         
         if (Request::is('delete')) {
-            // should send created response (most likely)
+            // should send no content response (most likely)
             $this->blank();
             return;
         }
