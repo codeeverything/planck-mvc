@@ -21,9 +21,15 @@ $container->errorResponseBuilder([function ($c) {
         $code = $ex->getCode();
         $response->status($code);
             
+        // if unauthorised we should send a challenge in our response, giving the auth scheme
         if ($code === Response::UNAUTHORISED) {
-            header('WWW-Authenticate: basic');
+            $response->header('WWW-Authenticate', 'JWT');
         }
+        
+        // if we don't want to send 403s, mask as a 404
+        // if ($code === Response::FORBIDDEN) {
+        //     $response->status(Response::NOTFOUND);
+        // }
             
         return [
             'error' => [

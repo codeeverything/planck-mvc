@@ -7,6 +7,7 @@ use Planck\Core\Network\Request;
 use Planck\Core\Network\Response;
 use Planck\Core\Exception\HttpNotFoundException;
 use Planck\Core\Exception\HttpUnauthorizedException;
+use Planck\Core\Exception\HttpForbiddenException;
 
 /**
  * Manage Todo tasks
@@ -20,7 +21,7 @@ class TestController extends RESTController {
     // }
     
     public function test() {
-        throw new HttpNotFoundException('Could not find that resource');
+        throw new HttpUnauthorizedException('Could not find that resource');
         $this->ok();
         return 'hello, world';
     }
