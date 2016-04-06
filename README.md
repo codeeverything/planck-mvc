@@ -16,7 +16,7 @@ Feel free to add issues to leave suggestions and comments.
 
 Planck is designed to be minimal and to help you quickly get working with RESTful responses. 
 
-The routing of RESTful requests is still the responsibility of your router and routes, but with the default Junction router that's easy to acheieve.
+The routing of RESTful requests is still the responsibility of your router and routes, but with the default Junction router that's easy to achieve.
 
 ### App structure
 
@@ -24,7 +24,7 @@ All your application code will live in the ```/src/App``` folder, with the excep
 
 Planck expects only two things in order to get you up and running:
 
-- A route which returns an array containing entries for the controller to instantiate, the action to call om that controller and any variables to pass from the route.
+- A route which returns an array containing entries for the controller to instantiate, the action to call on that controller and any variables to pass from the route.
 - A controller matching the name given in the route, with the suffix "Controller" and an action on that controller matching the action given in the route.
 
 For example:
@@ -57,7 +57,7 @@ Controllers in Planck are the entry and exit points for your business logic. Sin
 
 - By calling ```$this->set('property_name', 'property_value');``` inline within a controller, to set return values in a peacemeal fashion
 - By returning a value, or set of values from the controller ```return ['property' => 'value', 'result' => 1234];```
-  - Note: This return can be any serializable data type
+  - Note: This return can be any serializable data type (using the JsonSerializable interface in PHP this could even be a POPO)
 
 ### Responses
 
@@ -67,11 +67,11 @@ Planck's default behaviour is to return responses as JSON, but this can be chang
 
 Planck includes a ```RESTController``` which you can extend to get access to some useful convenience methods - for example:
 
-- ```$this->ok()``` - send a 200 response
-- ```$this->created()``` - send a 201 response
-- ```$this->created(false)``` - send a 202 response (accepted, will be created later)
-- ```$this->blank()``` - send a 204 response (no message body)
-- ```$this->unchanged()``` - send a 304 response (removes message body)
+- ```$this->ok()``` - set the response code as 200
+- ```$this->created()``` - set the response code as 201 
+- ```$this->created(false)``` - set the response code as 202 (accepted, will be created later)
+- ```$this->blank()``` - set the response code as 204 (no message body)
+- ```$this->unchanged()``` - set the response code as 304 (removes message body)
 
 The RESTController also includes a handy ```afterAction``` callback which will sniff your request method and try to set approriate codes and body content for you. For example:
 
@@ -80,7 +80,7 @@ The RESTController also includes a handy ```afterAction``` callback which will s
 - PUT - 201 CREATED
 - DELETE - 204 NO CONTENT
 
-If these don't suit your needs you can currently override the behavior by having a ```afterAction``` function in your controller. In future I aim to make the process more flexible.
+If these don't suit your needs you can currently override the behavior by having an empty (or custom) ```afterAction``` function in your controller. In future I aim to make the process more flexible.
 
 ### Throw RESTful errors
 
@@ -101,11 +101,11 @@ The default package is an array with items for "error" and "code", showing the e
 
 ### Services and Dependency Injection
 
-Planck is agnostic about the container you use, though it does expect it to implement the Container Interoperability interface.
+Planck is agnostic about the container you use, though it does expect it to implement the Container Interoperability Interface.
 
 By default Planck uses the lightweight Burlap container.
 
-A controllers dependencies are drawn from the container, and can be injected by simply referencing container services as the arguments for the controller's ```init()``` function, e.g.:
+A controller's dependencies are drawn from the container, and can be injected by simply referencing container services as the arguments for the controller's ```init()``` function, e.g.:
 
 ```php
 // controller code
@@ -173,4 +173,7 @@ An ever changing list of things to look at! :)
   - Maybe tie this in with the utility functions like pr() and debug() to have them add their output to the response rather than inline at the time of calling (a la CakePHP)?
 - [ ] Make Request and Response classes PSR-7 compliant and split into their own repos/packages
   - Maybe allow these to receive an event manager and details on how to emit events with it so we can do something "afterBodySet" for example, to set debug output?
-- [ ] Add some RESTful response helpers, for example for returning errors, returning "links", specifying default response codes for actions (200 on find, 201 on create...)
+- [ ] Add some RESTful response helpers, for example: 
+  - [x] for returning errors
+  - [ ] returning "links"
+  - [x] specifying default response codes for actions (200 on find, 201 on create...)

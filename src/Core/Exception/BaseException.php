@@ -13,6 +13,9 @@ class BaseException extends \Exception {
     /**
      * Constructor - pass up to parent
      * 
+     * This is the catch-all exception, in RESTful apps this is typically
+     * a 500 response (SERVER ERROR), with no additional information
+     * 
      * @param string $message - The message describing the exception
      * @param int $code - The HTTP code to describe the exception
      * @return void
