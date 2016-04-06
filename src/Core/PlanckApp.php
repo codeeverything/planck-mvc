@@ -7,7 +7,7 @@ use Planck\Core\Network\Response;
 use Planck\Core\Controller\Controller;
 use Planck\Core\Event\Event;
 use Planck\Core\Lib\Timer;
-use Planck\Core\Exception\BadException;
+use Planck\Core\Exception\BaseException;
 
 /**
  * The starting point of the Planck app
@@ -49,7 +49,7 @@ class PlanckApp {
             }
             
             if (error_reporting() & $severity) {
-                throw new BadException($message, 0, $severity, $filename, $lineno);
+                throw new BaseException($message, 0, $severity, $filename, $lineno);
             }
         });
         

@@ -21,6 +21,7 @@ class TestController extends RESTController {
     // }
     
     public function test() {
+        trigger_error("Number cannot be larger than 10");
         throw new HttpUnauthorizedException('Could not find that resource');
         $this->ok();
         return 'hello, world';
