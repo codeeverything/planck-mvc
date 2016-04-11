@@ -195,3 +195,9 @@ An ever changing list of things to look at! :)
   - [x] for returning errors
   - [ ] returning "links"
   - [x] specifying default response codes for actions (200 on find, 201 on create...)
+- [ ] Move config and public directories under src/App. Then allow plugins to share the App's directory structure
+  - [ ] Move config/database.php, config/app.php out into a /config directory. These transcend the app or plugins
+- [ ] Define a Plugin class in the core, this will "load" plugins, i.e. process any configs and add any path pointers if needed (for example to public web resources like JS or images)
+- [ ] Add PlanckPlugin to composer's list of installable types
+- [ ] Add Planck to composer's create-project list, plugin to?
+- 
