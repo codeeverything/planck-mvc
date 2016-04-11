@@ -124,9 +124,10 @@ Planck implements a simple event system, which you can extend with your own app 
 
 Event listeners are defined in the ```config/listeners.php``` file, and by convention Planck expects these to live in the ```src/App/Listener``` folder, but this is up to you.
 
-An example listener ```src/App/Listener/ExampleListener.php```:
+##### An example listener 
 
 ```php
+//src/App/Listener/ExampleListener.php
 <?php
 
 namespace Planck\App\Listener;
@@ -153,6 +154,22 @@ class ExampleListener implements IEventListener {
          ]);
     }
 }
+```
+
+##### Example of "emitting" (triggering) an event
+
+```php
+// src/App/Controller/HelloController
+
+use Planck\Core\Event\Event;
+
+public function hello($name) {
+    echo "Hello, $name";
+    Event::emit('app.welcomed');
+}
+
+// more goodness
+
 ```
 
 ## TODO
