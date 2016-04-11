@@ -27,7 +27,11 @@ class PlanckApp {
         // set exception handler
         set_exception_handler(function ($exception) use ($response, $container) {
             // get the error response builder
-            $exception->setErrorResponseBuilder($container->get('errorResponseBuilder'));
+            if (method_exists($exception, 'setErrorResponseBuilder')) {
+                $exception->setErrorResponseBuilder($container->get('errorResponseBuilder'));
+            } else {
+                $exception = new BaseException($exception->getMessage() . ' Exception code given: ' . $exception->getCode());    
+            }
             
             // set the response body
             // the status, headers and other response properties might be modified in the errorResponseBuilder
@@ -57,6 +61,7 @@ class PlanckApp {
         // TODO: Maybe wrap this sort of thing in an invoke() function? Then can check object, 
         // check method exists, handle errors more generally and gracefully?
         $routingData = call_user_func_array([$router, $config['app.router.handler']], []);
+        
         $controller = $routingData['controller'] . 'Controller';
         $action = either($routingData['action'], 'index');
         $params = either($routingData['vars'], []);
