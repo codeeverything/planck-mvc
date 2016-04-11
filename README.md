@@ -149,9 +149,9 @@ class ExampleListener implements IEventListener {
     }
     
     public function hello($controller, $name) {
-         $controller->set([
-             "hello.message" => "Why hello $name! How you doin'? :)"
-         ]);
+        $controller->set([
+            "hello.message" => "Why hello $name! How you doin'? :)"
+        ]);
     }
 }
 ```
@@ -165,7 +165,8 @@ use Planck\Core\Event\Event;
 
 public function hello($name) {
     echo "Hello, $name";
-    Event::emit('app.welcomed');
+    // emit an event and pass the current object plus some more stuff. you can pass anything you want here
+    Event::emit('app.welcomed', [$this, $moreData]);
 }
 
 // more goodness
