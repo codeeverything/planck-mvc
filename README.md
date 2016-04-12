@@ -200,4 +200,3 @@ An ever changing list of things to look at! :)
 - [ ] Define a Plugin class in the core, this will "load" plugins, i.e. process any configs and add any path pointers if needed (for example to public web resources like JS or images)
 - [ ] Add PlanckPlugin to composer's list of installable types
 - [ ] Add Planck to composer's create-project list, plugin to?
-- 
