@@ -8,9 +8,11 @@ NB: This is an ongoing project in its infancy, so expect much to be missing and 
 
 ## Open Source
 
-This is an open source effort, and although its only a pet project of mine contributions are welcome! So fork and PR away :)
+This is an open source effort, and although its only a pet project of mine contributions are welcome! So fork and PR away :) 
 
 Feel free to add issues to leave suggestions and comments.
+
+Take a look at [LICENSE.md](LICENSE.md) for more info (MIT).
 
 ## Writing a simple app
 
