@@ -188,7 +188,7 @@ An ever changing list of things to look at! :)
 - [x] Decouple router (some defined interface, or mapping?)
   - Decoupled by providing an app config "app.router.handler" which defines a method to call on the router object that will handle the request and match routes. Would be nice to find a standard like for the container and implement that instead
 - [x] Decouple container (container interoperability interface)
-- [ ] Pull "core" into separate framework repo. Maybe attach with subtrees, or just via Composer? 
+- [x] Pull "core" into separate framework repo. Maybe attach with subtrees, or just via Composer? 
 - [x] Push the "dispatching" logic out of index.php and into a framework/application/kernel class
   - Maybe tie this in with the utility functions like pr() and debug() to have them add their output to the response rather than inline at the time of calling (a la CakePHP)?
 - [ ] Make Request and Response classes PSR-7 compliant and split into their own repos/packages
