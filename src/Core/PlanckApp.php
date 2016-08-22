@@ -16,6 +16,9 @@ class PlanckApp {
     
     // TODO: Pull the router out of the container?
     public static function run($router, $container, $config) {
+        echo "This is a build test! Bad for the code though!";
+        die();
+        
         Timer::start('planck:init');
         
         // init the request
